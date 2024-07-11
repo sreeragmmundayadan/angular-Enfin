@@ -1,0 +1,26 @@
+<h2>{{ isEditMode ? "Edit Book" : "Add Book" }}</h2>
+
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name" />
+  </div>
+  <div>
+    <label for="description">Description:</label>
+    <textarea id="description" formControlName="description"></textarea>
+  </div>
+  <div>
+    <label for="publishDate">Publish Date:</label>
+    <input type="date" id="publishDate" formControlName="publishDate" />
+  </div>
+  <div>
+    <label for="price">Price:</label>
+    <input type="number" id="price" formControlName="price" />
+  </div>
+  <div>
+    <button type="submit" [disabled]="!bookForm.valid">
+      {{ isEditMode ? "Update" : "Save" }}
+    </button>
+    <button type="button" (click)="onCloseAddEditScreen(false)">Close</button>
+  </div>
+</form>

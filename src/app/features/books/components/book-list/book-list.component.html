@@ -1,0 +1,61 @@
+<div class="top-bar">
+  <h2>Manage Books</h2>
+  <div *ngIf="!isAddEditBookScreenOpen">
+    <input
+      type="text"
+      placeholder="Search by Name"
+      [(ngModel)]="searchName"
+      (input)="search()"
+    />
+    <input
+      type="text"
+      placeholder="Search by Description"
+      [(ngModel)]="searchDescription"
+      (input)="search()"
+    />
+    <button class="add-book-button" (click)="displayAddEditBookScreen()">
+      Add New Book
+    </button>
+  </div>
+</div>
+
+<div class="book-list-container" *ngIf="!isAddEditBookScreenOpen">
+  <table class="book-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Publish Date</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+        <td>{{ book.name }}</td>
+        <td>{{ book.description }}</td>
+        <td>{{ book.publishDate | date }}</td>
+        <td>{{ book.price | currency }}</td>
+        <td>
+          <button (click)="displayAddEditBookScreen(book)">Edit</button>
+          <button (click)="deleteBook(book.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">
+      Previous
+    </button>
+    <span>{{ currentPage }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
+</div>
+
+<app-add-edit-book
+  *ngIf="isAddEditBookScreenOpen"
+  [book]="selectedBook"
+  (closeAddEditScreen)="closeAddEditScreen($event)"
+></app-add-edit-book>
